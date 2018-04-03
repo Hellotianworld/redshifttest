@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>进度</title>
+	<style type="text/css">
+		li{
+			display: inline-block;
+			height: 23px;
+			background-color: #F6F6F6;
+			font-size: 12px;
+			color: #666;
+			border: 1px solid  #e5e5e5;
+			line-height: 25px;
+			width: 80.5px;
+			text-align: center;
+			position: relative;
+			margin-right: 5.5px;
+			border-right: 0;
+		}
+		li:after{
+			content: '';
+			display: block;
+			border-top: 12px solid transparent;
+			border-bottom: 12px solid transparent;
+			border-left: 12.5px solid #e5e5e5;
+			right: -12.5px;
+			position: absolute;
+			top: 0;
+			z-index: 2;
+		}
+		li:before {
+			width: 0;
+			height: 0;
+			content: '';
+			border-left: 12px solid #F6F6F6;
+			border-top: 12px solid transparent;
+			border-bottom: 12.5px solid transparent;
+			position: absolute;
+			right: -11px;
+			z-index: 3;
+		}
+		.one{
+			background-color: #108EE9;
+			border: 1px solid  #108EE9;
+			border-left: 0;
+			width: 93px;
+			color: white;
+		}
+		.one:before{
+			content: ''; 
+			display: block; 
+			border-top: 12px solid #108EE9; 
+			border-bottom: 12px solid #108EE9; 
+			border-left: 12.5px solid white; 
+			position: absolute;  
+			left: 0px;  
+			top: 0; 
+		}
+		.two{
+			border-left: 0;
+			width:93px;
+		}
+		.one:after{
+			border-left: 12.5px solid #108EE9;			
+		}
+		.two:before{
+			content: ''; 
+			display: block; 
+			border-top: 12px solid transparent; 
+			border-bottom: 12px solid transparent; 
+			border-left: 12.5px solid white; 
+			position: absolute;  
+			left: 0px;  
+			top: 0; 
+		}
+		.two:after{
+			border-left: 12.5px solid #F6F6F6;		
+		}
+		.three{
+			border-right: 1px solid  #e5e5e5;
+			border-left: 0;
+			width:93px;
+		}
+		.three:before{
+			content: ''; 
+			display: block; 
+			border-top: 12px solid #e5e5e5; 
+			border-bottom: 12px solid #e5e5e5; 
+			border-left: 12.5px solid white; 
+			position: absolute;  
+			left: 0px;  
+			top: 0; 		
+		}
+		.three:after{
+			width: 0;
+			height: 0;
+			content: '';
+			border-left: 12.5px solid white;
+			border-top: 12.5px solid #F6F6F6;
+			border-bottom: 10.5px solid #F6F6F6;
+			position: absolute;
+			left:0;
+			z-index: 3;
+		}
+		.end{
+			background-color: white;
+			border: 1px solid  #D0021B;
+			width: 93px;
+			color: #D0021B;
+		}
+		.end:after{
+			display: none;
+		}
+		.end:before{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul>
+			<li class="zero">草稿</li>
+			<li class="one">待审核</li>
+			<li class="two">待复核</li>
+			<li class="three">已核准</li>
+		</ul>
+		<ul>
+			<li style="margin-left:301px" class="end">
+				已终止
+			</li>
+		</ul>
+	</div>
+	
+</body>
+</html>
+<script type="text/javascript">
+	var data=[{"name":"待接单","status":"WAIT_ACCEPT","isShadowed":true},{"name":"待发货","status":"WAIT_DELIVER","isShadowed":true,"isCurrentStatus":true},{"name":"验货入库","status":"STOCK_IN"},{"name":"已完成","status":"DELIVERED"}];
+	function change(_data){
+		var nodes= document.getElementsByTagName("li");
+		var css=window.getComputedStyle(nodes[1],null);
+		for(var i=0;i<nodes.length;i++){
+			console.log(i)
+			nodes[i].innerHTML=_data[i].name;
+			if(_data[i].isShadowed===true && _data[i].isCurrentStatus===true){
+				nodes[i].style.backgroundColor=css.backgroundColor;
+				nodes[i].style.color=css.color;
+				nodes[i].style.borderTopColor=css.borderTopColor;
+				nodes[i].style.borderBottomColor=css.borderBottomColor;
+				nodes[i].style.borderLeftColor=css.borderLeftColor;
+
+			}
+			if(_data.length==1){
+				nodes[4].style.visibility="visible";
+			}
+		}
+	}
+	function _change(data1){
+		return function(){
+			change(data1);
+			console.log(data1)
+		}
+	}
+	setTimeout(_change(data),10000);
+</script>
